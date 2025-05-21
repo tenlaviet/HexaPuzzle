@@ -249,10 +249,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629645692394127499c3a0519f2caa43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lr: {fileID: 0}
   m_Grid: {fileID: 1468267821}
   camera: {fileID: 0}
   Points: []
   SelectedHexCells: []
+  _pointCount: 0
+  _firstTouchIsOnHex: 0
+  _highestHexValue: 0
 --- !u!4 &109087320
 Transform:
   m_ObjectHideFlags: 0
@@ -2264,6 +2268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1468267822}
   - component: {fileID: 1468267821}
+  - component: {fileID: 1468267823}
   m_Layer: 0
   m_Name: HexGrid
   m_TagString: Untagged
@@ -2284,25 +2289,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HexCellPrefab: {fileID: 3215739657255718013, guid: ff802de08c5d60a4e84528899493490b, type: 3}
-  cellLabelPrefab: {fileID: 3370816146645180411, guid: 87c76cf62b51a6f45958f4c395ee0bea, type: 3}
-  gridCanvas: {fileID: 1131639682}
-  m_HexVariations:
-  - {fileID: 11400000, guid: 81dfbc27268784c46b76f63c9cc8e0e7, type: 2}
-  - {fileID: 11400000, guid: bdbd14d212953064a8582b19b70048f1, type: 2}
-  - {fileID: 11400000, guid: 31796d5584e52e5488c502964e88038a, type: 2}
-  - {fileID: 11400000, guid: aac5a7235eb4ed44aa39113f84c15c34, type: 2}
-  - {fileID: 11400000, guid: fd0035469732afe4bb9d40c706bc213c, type: 2}
-  - {fileID: 11400000, guid: 87c141b9736b12847b6e00c95d36ff36, type: 2}
-  - {fileID: 11400000, guid: d600ceef6e93c8640bd1ca61d614c5c4, type: 2}
-  - {fileID: 11400000, guid: e66590f0d2a249443aac9285b5515e96, type: 2}
-  - {fileID: 11400000, guid: 31bf747d81a4391498d96e6cc2e1b113, type: 2}
-  - {fileID: 11400000, guid: 6eb752da8a03a9046a94539f319c8772, type: 2}
-  - {fileID: 11400000, guid: 168ff21df2760904ca64daa11a2437c5, type: 2}
   Height: 6
   Width: 5
   offset: 0.5
-  cells: []
-  speed: 6
 --- !u!4 &1468267822
 Transform:
   m_ObjectHideFlags: 0
@@ -2318,6 +2307,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1468267823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468267820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff451a3ab8c8ad44aa5f32fab6752d91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HexVariations:
+  - {fileID: 11400000, guid: 81dfbc27268784c46b76f63c9cc8e0e7, type: 2}
+  - {fileID: 11400000, guid: bdbd14d212953064a8582b19b70048f1, type: 2}
+  - {fileID: 11400000, guid: 31796d5584e52e5488c502964e88038a, type: 2}
+  - {fileID: 11400000, guid: aac5a7235eb4ed44aa39113f84c15c34, type: 2}
+  - {fileID: 11400000, guid: fd0035469732afe4bb9d40c706bc213c, type: 2}
+  - {fileID: 11400000, guid: 87c141b9736b12847b6e00c95d36ff36, type: 2}
+  - {fileID: 11400000, guid: d600ceef6e93c8640bd1ca61d614c5c4, type: 2}
+  - {fileID: 11400000, guid: e66590f0d2a249443aac9285b5515e96, type: 2}
+  - {fileID: 11400000, guid: 31bf747d81a4391498d96e6cc2e1b113, type: 2}
+  - {fileID: 11400000, guid: 6eb752da8a03a9046a94539f319c8772, type: 2}
+  - {fileID: 11400000, guid: 168ff21df2760904ca64daa11a2437c5, type: 2}
+  M_HexPrefab: {fileID: 7432510034109379361, guid: 23c8e7269e4507848829b3f2d999f13d, type: 3}
+  hexes: []
+  speed: 12
 --- !u!1 &1517501995
 GameObject:
   m_ObjectHideFlags: 0
