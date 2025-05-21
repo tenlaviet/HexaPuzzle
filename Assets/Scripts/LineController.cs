@@ -17,8 +17,7 @@ public class LineController : MonoBehaviour
     private int _pointCount;
     private bool _firstTouchIsOnHex;
 
-    private int _mergeValue;
-    private int _highestMergeLevel;
+    private int _highestHexValue;
     private void Awake()
     {
         _lr = GetComponent<LineRenderer>();
@@ -64,9 +63,9 @@ public class LineController : MonoBehaviour
                     {
                         _firstTouchIsOnHex = true;
                         SelectedHexCells.Add(cell);
+                        _highestHexValue = cell.data.value;
                         Vector2 hexPos = hit.transform.position;
                         Points.Add(hexPos);
-
                     }
 
                 }
@@ -90,8 +89,13 @@ public class LineController : MonoBehaviour
                     {
                         if (hit.transform.TryGetComponent(out HexCell cell))
                         {
+
                             if (!SelectedHexCells.Contains(cell))
                             {
+                                if (cell.data.value != SelectedHexCells[SelectedHexCells.Count - 1].data.value && SelectedHexCells.Count < 2)
+                                {
+                                    return;
+                                }
                                 if (cell.data.CanMerge(SelectedHexCells[SelectedHexCells.Count - 1]))
                                 {
                                     SelectedHexCells.Add(cell);

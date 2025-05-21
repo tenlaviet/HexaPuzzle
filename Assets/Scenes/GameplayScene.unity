@@ -2298,7 +2298,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 31bf747d81a4391498d96e6cc2e1b113, type: 2}
   - {fileID: 11400000, guid: 6eb752da8a03a9046a94539f319c8772, type: 2}
   - {fileID: 11400000, guid: 168ff21df2760904ca64daa11a2437c5, type: 2}
-  Height: 5
+  Height: 6
   Width: 5
   offset: 0.5
   cells: []

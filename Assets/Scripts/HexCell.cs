@@ -47,7 +47,7 @@ using UnityEngine;
         {
             
             // value validation
-            bool isValidValue = cell.data.value == value;
+            bool isValidValue = cell.data.value == value || (int)Math.Log(cell.data.value, 2) == (int)Math.Log(this.value, 2) - 1;
             //
             
             //neighbor hex check
@@ -123,7 +123,7 @@ public class HexCell : MonoBehaviour
         if (_percentBetweenPoints >= 1)
         {
             _isMoving = false;
-            Destroy(gameObject);
+            //Destroy(m_SpriteTransform.gameObject);
         }
     }
     public void SetDestination(Vector2 destination, float speed = 5)
