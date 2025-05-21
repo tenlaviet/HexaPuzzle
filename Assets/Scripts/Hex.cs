@@ -1,18 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Hex : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public HexState state { get; private set; }
+    public HexCell cell { get; private set; }
+    public bool locked { get; set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private TextMeshProUGUI m_ValueDisplayText;
+    [SerializeField] private SpriteRenderer m_BackgroundSR;
 }

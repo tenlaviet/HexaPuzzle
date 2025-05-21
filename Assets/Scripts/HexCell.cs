@@ -80,9 +80,13 @@ using UnityEngine;
 public class HexCell : MonoBehaviour
 {
     public HexData data;
-    [SerializeField] private SpriteRenderer m_BackgroundSR;
+    public Hex hex;
+    public HexCoordinate coordinate;
+    public bool Empty => hex == null;
+    public bool Occupied => hex != null;
     [SerializeField] private Transform m_SpriteTransform;
-    [SerializeField] private TextMeshProUGUI m_ValueDisplayText;
+
+
     public HexState state { get; private set; }
     
     
@@ -105,12 +109,12 @@ public class HexCell : MonoBehaviour
     }
     public void SetState(HexState state)
     {
-        this.state = state;
-        
-        this.data.SetValue(state.number);
-        m_BackgroundSR.color = state.backgroundColor;
-        m_ValueDisplayText.color = state.textColor;
-        m_ValueDisplayText.text = state.number.ToString();
+        // this.state = state;
+        //
+        // this.data.SetValue(state.number);
+        // m_BackgroundSR.color = state.backgroundColor;
+        // m_ValueDisplayText.color = state.textColor;
+        // m_ValueDisplayText.text = state.number.ToString();
     }
     private void MoveToward(Vector3 destination)
     {
