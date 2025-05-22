@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 public class HexState : ScriptableObject
 {
-    [FormerlySerializedAs("number")] public int value;
+    public int number;
     public Color32 backgroundColor;
     public Color32 textColor;
 

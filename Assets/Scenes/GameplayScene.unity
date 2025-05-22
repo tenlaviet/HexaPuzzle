@@ -249,14 +249,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629645692394127499c3a0519f2caa43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lr: {fileID: 0}
   m_Grid: {fileID: 1468267821}
-  camera: {fileID: 0}
+  m_Board: {fileID: 1468267823}
+  camera: {fileID: 519420031}
   Points: []
   SelectedHexCells: []
-  _pointCount: 0
-  _firstTouchIsOnHex: 0
-  _highestHexValue: 0
 --- !u!4 &109087320
 Transform:
   m_ObjectHideFlags: 0
@@ -2333,7 +2330,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 168ff21df2760904ca64daa11a2437c5, type: 2}
   M_HexPrefab: {fileID: 7432510034109379361, guid: 23c8e7269e4507848829b3f2d999f13d, type: 3}
   hexes: []
-  speed: 12
 --- !u!1 &1517501995
 GameObject:
   m_ObjectHideFlags: 0

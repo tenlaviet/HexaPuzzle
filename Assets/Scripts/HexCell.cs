@@ -19,7 +19,7 @@ public struct HexCoordinate
 public class HexCell : MonoBehaviour
 {
     public Hex hex;
-    public HexCoordinate coordinate;
+    public HexCoordinate coordinate { get; private set; }
     public HexCoordinate[] NeighborCoordinates { get; private set; }
 
     public bool Empty => hex == null;
@@ -28,6 +28,12 @@ public class HexCell : MonoBehaviour
 
     private void Awake()
     {
+    }
+
+    public void SetCellCoordinate(HexCoordinate coordinate)
+    {
+        this.coordinate = coordinate;
+        
         bool isEven = coordinate.column % 2 == 0;
         if (isEven)
         {

@@ -2,82 +2,96 @@ using System;
 using TMPro;
 using UnityEngine;
 
+
 public class Hex : MonoBehaviour
 {
+    
     public HexState state { get; private set; }
     public HexCell cell { get; private set; }
-    //public bool locked { get; set; }
 
     [SerializeField] private TextMeshProUGUI m_ValueDisplayText;
     [SerializeField] private SpriteRenderer m_BackgroundSR;
+
+    private Vector2 _oldPos;
+    private Vector2 _newPos;
     
-    [SerializeField] private Transform m_SpriteTransform;
-    private float _speed;
     private bool _isMoving;
-    private Vector3 _destination;
     private float _percentBetweenPoints;
-    
+    private bool _isMerging;
+
+    private void Awake()
+    {
+
+    }
+
     private void Update()
     {
         if (_isMoving)
         {
-            //MoveToward(_destination);
+            MoveTo(_oldPos, _newPos);
         }
     }
-    // public bool CanMerge(Hex hex)
-    // {
-    //         
-    //     // value validation
-    //     bool isValidValue = hex.state.value == this.state.value || (int)Math.Log(hex.state.value, 2) == (int)Math.Log(this.state.value, 2) - 1;
-    //     //
-    //         
-    //     //neighbor hex check
-    //     bool isNeighbor = false;
-    //
-    //     for (int i = 0 ; i < cell.NeighborCoordinates.Length; i++)
-    //     {
-    //         if (hex.cell.coordinate.Equals(this.cell.NeighborCoordinates[i]))
-    //         {
-    //             isNeighbor = true;
-    //             break;
-    //         }
-    //     }
-    //     return isNeighbor && isValidValue;
-    // }
-    // public void SetDestination(Vector2 destination, float speed = 5)
-    // {
-    //     _destination = destination;
-    //     _isMoving = true;
-    //     _speed = speed;
-    // }
-    //
-    // private void MoveToward(Vector3 destination)
-    // {
-    //     float distanceBetweenWaypoints = Vector3.Distance (transform.position, _destination);
-    //     _percentBetweenPoints += Time.deltaTime * _speed/distanceBetweenWaypoints;
-    //     _percentBetweenPoints = Mathf.Clamp01 (_percentBetweenPoints);
-    //     float easedPercentBetweenPoints = Ease(_percentBetweenPoints);
-    //     Vector3 newPos = Vector3.Lerp (transform.position, _destination, easedPercentBetweenPoints);
-    //     m_SpriteTransform.position = newPos;
-    //     if (_percentBetweenPoints >= 1)
-    //     {
-    //         _isMoving = false;
-    //         //Destroy(m_SpriteTransform.gameObject);
-    //     }
-    // }
+
+    public void MoveTo(Vector2 start, Vector2 finish)
+    {
+        float distanceBetweenWaypoints = Vector3.Distance (start, finish);
+        _percentBetweenPoints += Time.deltaTime * 5f/distanceBetweenWaypoints;
+        _percentBetweenPoints = Mathf.Clamp01 (_percentBetweenPoints);
+        float easedPercentBetweenPoints = Ease(_percentBetweenPoints);
+        transform.position = Vector3.Lerp (start, finish, easedPercentBetweenPoints);
+        if (_percentBetweenPoints >= 1)
+        {
+            _percentBetweenPoints = 0;
+            _isMoving = false;
+            if (_isMerging)
+            {
+                _isMerging = false;
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    public void MergeInto(HexCell mergeInto)
+    {
+        _isMerging = true;
+        if (this.cell != null) {
+            this.cell.hex = null;
+        }
+
+        this.cell.hex = null;
+        _oldPos = transform.position;
+        _newPos = mergeInto.transform.position;
+        _isMoving = true;
+    }
+
+    public void MoveToCell(HexCell cell)
+    {
+        if (this.cell != null) {
+            this.cell.hex = null;
+        }
+        
+        this.cell = cell;
+        this.cell.hex = this;
+        _oldPos = transform.position;
+        _newPos = cell.transform.position;
+        _isMoving = true;
+
+    }
+    
+
     public void SetState(HexState state)
     {
         this.state = state;
         
         m_BackgroundSR.color = this.state.backgroundColor;
         m_ValueDisplayText.color = this.state.textColor;
-        m_ValueDisplayText.text = this.state.value.ToString();
+        m_ValueDisplayText.text = this.state.number.ToString();
     }
-    //
-    // private float Ease(float percent)
-    // {
-    //     return Mathf.Sin((percent * Mathf.PI) / 2); 
-    // }
+    
+    private float Ease(float percent)
+    {
+        return Mathf.Sin((percent * Mathf.PI) / 2); 
+    }
     public void Spawn(HexCell cell)
     {
         if (this.cell != null) {
