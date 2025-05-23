@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     [SerializeField] private TextMeshProUGUI m_timerText;
-
+    [SerializeField] private TextMeshProUGUI m_scoreText;
     
-    private int score = 0;
-    private float elapsedTime;
+    private int _score;
+    private float _elapsedTime;
     
     private void Awake()
     {
@@ -21,6 +21,12 @@ public class GameManager : MonoBehaviour
         } else {
             Instance = this;
         }
+    }
+
+    private void Start()
+    {
+        UpdateTimer();
+        UpdateScore(_score);
     }
 
     private void OnDestroy()
@@ -38,10 +44,16 @@ public class GameManager : MonoBehaviour
     
     private void UpdateTimer()
     {
-        elapsedTime += Time.deltaTime;
-        int minutes = Mathf.FloorToInt(elapsedTime / 60);
-        int seconds = Mathf.FloorToInt(elapsedTime % 60);
+        _elapsedTime += Time.deltaTime;
+        int minutes = Mathf.FloorToInt(_elapsedTime / 60);
+        int seconds = Mathf.FloorToInt(_elapsedTime % 60);
         m_timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    public void UpdateScore(int number)
+    {
+        _score += number;
+        m_scoreText.text = _score.ToString();
     }
     // public void IncreaseScore(int points)
     // {

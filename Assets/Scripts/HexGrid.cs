@@ -60,10 +60,10 @@ public class HexGrid : MonoBehaviour
     }
     private void CreateSpawningPoint(int x)
     {
-         Vector2 position = new Vector2();
+         Vector3 position = new Vector3();
          position.x = x * (_outerRadius * 1.5f + offset);
-         position.y = 7;
-         spawningPoints[x] = position;
+         position.y = 12;
+         spawningPoints[x] = position + transform.position;
     }
 
     public HexCell GetCell(HexCoordinate coordinate)
@@ -74,7 +74,6 @@ public class HexGrid : MonoBehaviour
     {
         return cells[col,row];
     }
-
     public List<HexCell> GetAllEmptyCells()
     {
         List<HexCell> emptyCells = new List<HexCell>();
@@ -91,4 +90,31 @@ public class HexGrid : MonoBehaviour
         return emptyCells;
     }
 
+    public List<HexCell> GetCellNeighbors(HexCell cell)
+    {
+        List<HexCell> neighborCells = new List<HexCell>();
+        foreach (HexCoordinate coordinate in cell.neighborCoordinates)
+        {
+            if (coordinate.column >=0 && coordinate.column < Width && coordinate.row >=0 && coordinate.row < Height)
+            {
+                neighborCells.Add(cells[coordinate.column, coordinate.row]);
+            }
+        }
+        return neighborCells;
+    }
+    public List<HexCell> GetSameNumberNeighborCells(HexCell cell)
+    {
+        List<HexCell> neighborCells = new List<HexCell>();
+        foreach (HexCoordinate coordinate in cell.neighborCoordinates)
+        {
+            if (coordinate.column >=0 && coordinate.column < Width && coordinate.row >=0 && coordinate.row < Height)
+            {
+                if (cells[coordinate.column, coordinate.row].hex.state.number == cell.hex.state.number)
+                {
+                    neighborCells.Add(cells[coordinate.column, coordinate.row]);
+                }
+            }
+        }
+        return neighborCells;
+    }
 }

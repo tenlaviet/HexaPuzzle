@@ -510,6 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_timerText: {fileID: 741825819}
+  m_scoreText: {fileID: 1692155785}
 --- !u!4 &470595755
 Transform:
   m_ObjectHideFlags: 0
@@ -678,7 +679,7 @@ RectTransform:
   - {fileID: 1280557258}
   - {fileID: 741825818}
   m_Father: {fileID: 546486916}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -697,7 +698,7 @@ GameObject:
   - component: {fileID: 546486918}
   - component: {fileID: 546486917}
   m_Layer: 5
-  m_Name: Timer&Pause-Holder
+  m_Name: Top-Row-Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -716,8 +717,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1922398609}
-  - {fileID: 1692155784}
   - {fileID: 538173020}
+  - {fileID: 1716243344}
   m_Father: {fileID: 1517501999}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1617,7 +1618,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1147229458}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1468267823}
+        m_TargetAssemblyTypeName: HexBoard, Assembly-CSharp
+        m_MethodName: Undo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1147229458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1739,7 +1752,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1240582712}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1468267823}
+        m_TargetAssemblyTypeName: HexBoard, Assembly-CSharp
+        m_MethodName: Hint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1240582712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2216,7 +2241,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1418041578}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1468267823}
+        m_TargetAssemblyTypeName: HexBoard, Assembly-CSharp
+        m_MethodName: ToggleRemoveHex
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1418041578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2316,7 +2353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff451a3ab8c8ad44aa5f32fab6752d91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HexVariations:
+  m_hexVariations:
   - {fileID: 11400000, guid: 81dfbc27268784c46b76f63c9cc8e0e7, type: 2}
   - {fileID: 11400000, guid: bdbd14d212953064a8582b19b70048f1, type: 2}
   - {fileID: 11400000, guid: 31796d5584e52e5488c502964e88038a, type: 2}
@@ -2328,8 +2365,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 31bf747d81a4391498d96e6cc2e1b113, type: 2}
   - {fileID: 11400000, guid: 6eb752da8a03a9046a94539f319c8772, type: 2}
   - {fileID: 11400000, guid: 168ff21df2760904ca64daa11a2437c5, type: 2}
-  M_HexPrefab: {fileID: 7432510034109379361, guid: 23c8e7269e4507848829b3f2d999f13d, type: 3}
+  M_hexPrefab: {fileID: 7432510034109379361, guid: 23c8e7269e4507848829b3f2d999f13d, type: 3}
   hexes: []
+  wait: 0
 --- !u!1 &1517501995
 GameObject:
   m_ObjectHideFlags: 0
@@ -2445,7 +2483,7 @@ GameObject:
   - component: {fileID: 1692155786}
   - component: {fileID: 1692155785}
   m_Layer: 5
-  m_Name: Score-Display
+  m_Name: Score-Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2463,8 +2501,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 546486916}
-  m_RootOrder: 1
+  m_Father: {fileID: 1716243344}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2568,6 +2606,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692155783}
   m_CullTransparentMesh: 1
+--- !u!1 &1716243343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1716243344}
+  m_Layer: 5
+  m_Name: Score-Display
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1716243344
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716243343}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1692155784}
+  m_Father: {fileID: 546486916}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1922398608
 GameObject:
   m_ObjectHideFlags: 0

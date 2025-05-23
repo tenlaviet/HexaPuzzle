@@ -47,27 +47,48 @@ public class LineController : MonoBehaviour
             } 
         }
     }
+
+    private HexCell GetHitCell(RaycastHit2D hit)
+    {
+        if (hit)
+        {
+            if (hit.transform.gameObject.CompareTag("Hex"))
+            {
+                if (hit.transform.TryGetComponent(out HexCell cell))
+                {
+                    if (cell.hex != null)
+                    {
+                        return cell;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
     private void MouseInput()
     {
         Vector2 mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
-        
+        if (m_Board.wait)
+        {
+            return;
+        }
+            
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-
-            if (hit)
+            HexCell foundCell = GetHitCell(hit);
+            if (foundCell != null)
             {
-                if (hit.transform.gameObject.CompareTag("Hex"))
+                if (m_Board.IsRemoving)
                 {
-                    if (hit.transform.TryGetComponent(out HexCell cell))
-                    {
-                        _firstTouchIsOnHex = true;
-                        SelectedHexCells.Add(cell);
-                        Vector2 hexPos = hit.transform.position;
-                        Points.Add(hexPos);
-                    }
-
+                    m_Board.RemoveHex(foundCell);
+                    return;
                 }
+                _firstTouchIsOnHex = true;
+                SelectedHexCells.Add(foundCell);
+                Vector2 hexPos = foundCell.transform.position;
+                Points.Add(hexPos);
             }
         }
         
@@ -82,26 +103,31 @@ public class LineController : MonoBehaviour
                 
                 Points[Points.Count - 1] = mousePos;
                 RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-                if (hit)
+                HexCell foundCell = GetHitCell(hit);
+                if (foundCell != null)
                 {
-                    if (hit.transform.gameObject.CompareTag("Hex"))
+                    if (!SelectedHexCells.Contains(foundCell))
                     {
-                        if (hit.transform.TryGetComponent(out HexCell cell))
+                        if (foundCell.hex.state.number != SelectedHexCells[SelectedHexCells.Count - 1].hex.state.number && SelectedHexCells.Count < 2)
                         {
-
-                            if (!SelectedHexCells.Contains(cell))
-                            {
-                                if (cell.hex.state.number != SelectedHexCells[SelectedHexCells.Count - 1].hex.state.number && SelectedHexCells.Count < 2)
-                                {
-                                    return;
-                                }
-                                if (m_Board.CanMerge(SelectedHexCells[SelectedHexCells.Count - 1], cell))
-                                {
-                                    SelectedHexCells.Add(cell);
-                                    Vector2 hexPos = hit.transform.position;
-                                    Points[Points.Count - 1] = hexPos;
-                                }
-                            }
+                            return;
+                        }
+                        if (m_Board.CanMerge(SelectedHexCells[SelectedHexCells.Count - 1], foundCell))
+                        {
+                            SelectedHexCells.Add(foundCell);
+                            Vector2 hexPos = foundCell.transform.position;
+                            Points[Points.Count - 1] = hexPos;
+                        }
+                    }
+                    else
+                    {
+                        if (foundCell != SelectedHexCells.Last())
+                        {
+                            int removeFrom = SelectedHexCells.IndexOf(foundCell);
+                            int removeTo = SelectedHexCells.Count - 1;
+                            Debug.Log(removeFrom + "-->" + removeTo);
+                            SelectedHexCells.RemoveRange(removeFrom,removeTo - removeFrom);
+                            Points.RemoveRange(removeFrom, removeTo + 1 - removeFrom);
                         }
                     }
                 }
