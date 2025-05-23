@@ -28,7 +28,8 @@ public class HexBoard : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            Restart();
+            Refill(_grid.GetAllEmptyCells());
+            //Restart();
         }
     }
 
@@ -49,7 +50,6 @@ public class HexBoard : MonoBehaviour
         Hex hex = Instantiate(M_HexPrefab, _grid.transform);
         hex.SetState(m_HexVariations[randomState]);
         hexes.Add(hex);
-
         return hex;
     }
 
@@ -114,10 +114,10 @@ public class HexBoard : MonoBehaviour
         {
             cell.hex.MergeInto(mergedCell);
         }
-        Invoke(nameof(Collapse), 3f);
+        Collapse();
     }
 
-    public void Collapse()
+    private void Collapse()
     {
         for (int x = 0; x < _grid.Width; x++)
         {
@@ -137,6 +137,14 @@ public class HexBoard : MonoBehaviour
                     _grid.cells[x,y].hex.MoveToCell(_grid.cells[x,y - emptyCellsCount]);
                 }
             }
+        }
+    }
+
+    private void Refill(List<HexCell> emptyCells)
+    {
+        for (int i = 0; i < emptyCells.Count; i++)
+        {
+            CreateHex().Spawn(emptyCells[i]);
         }
     }
 
