@@ -31,6 +31,10 @@ public class LineController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
         MouseInput();
         DrawLine();
     }

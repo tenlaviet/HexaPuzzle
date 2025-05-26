@@ -39,13 +39,14 @@ public class HexBoard : MonoBehaviour
     private void Start()
     {
        FillBoard(_grid.GetAllEmptyCells());
+       GameManager.Instance.Board = this;
     }
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
             //Refill(_grid.GetAllEmptyCells());
-            Restart();
+            RestartBoard();
         }if(Input.GetKeyDown(KeyCode.A))
         {
             Undo();
@@ -164,7 +165,9 @@ public class HexBoard : MonoBehaviour
     }
     private void FillBoard(List<HexCell> emptyCells)
     {
+        Debug.Log(emptyCells.Count);
         hexes.RemoveAll(hex => hex == null);
+        Debug.Log(emptyCells.Count);
         for (int i = 0; i < emptyCells.Count; i++)
         {
             CreateHex().Spawn(_grid.spawningPoints[emptyCells[i].coordinate.column]).MoveToCell(emptyCells[i]);
@@ -195,16 +198,17 @@ public class HexBoard : MonoBehaviour
 
         IsCollapsing = true;
     }
-    public void Restart()
+    public void RestartBoard()
     {
         foreach (Hex hex in hexes)
         {
             if (hex != null)
             {
-                Destroy(hex.gameObject);
+                hex.Remove();
             }
         }
         hexes.Clear();
+        BoardHistory.Clear();
         FillBoard(_grid.GetAllEmptyCells());
     }
     public void ToggleRemoveHex()
@@ -236,7 +240,7 @@ public class HexBoard : MonoBehaviour
                 {
                     hintCellsList.Add(neighborCell);
                     //run hint anim
-                    //neighborCell.hex.transform.localScale *= 1.5f;
+                    neighborCell.hex.transform.localScale *= 1.2f;
                 }
             }
         }
