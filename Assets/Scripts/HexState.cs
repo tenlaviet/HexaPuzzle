@@ -10,5 +10,4 @@ public class HexState : ScriptableObject
     public int number;
     public Color32 backgroundColor;
     public Color32 textColor;
-
 }

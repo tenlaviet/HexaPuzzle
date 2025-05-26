@@ -91,7 +91,7 @@ public class HexBoard : MonoBehaviour
         hexes.Add(hex);
         return hex;
     }
-    public bool CanMerge(HexCell lastCell, HexCell mergeInto)
+    public bool CanMerge(HexCell lastCell, HexCell mergeInto, bool allowMergeLarger)
     {
         //neighbor hex check
         bool isNeighbor = false;
@@ -105,7 +105,18 @@ public class HexBoard : MonoBehaviour
             }
         } 
         // value validation
-        bool isValidValue = lastCell.hex.state.number == mergeInto.hex.state.number || (int)Math.Log(lastCell.hex.state.number, 2) == (int)Math.Log(mergeInto.hex.state.number, 2) - 1;
+        bool isValidValue = false;
+        if (lastCell.hex.state.number == mergeInto.hex.state.number)
+        {
+            isValidValue = true;
+        }
+        else
+        {
+            if (allowMergeLarger && (int)Math.Log(lastCell.hex.state.number, 2) == (int)Math.Log(mergeInto.hex.state.number, 2) - 1)
+            {
+                isValidValue = true;
+            }
+        }
         //
             
         return isNeighbor && isValidValue;

@@ -15,9 +15,8 @@ public class LineController : MonoBehaviour
 
     public List<Vector2> Points;
     public List<HexCell> SelectedHexCells;
-    private int _pointCount;
     private bool _firstTouchIsOnHex;
-
+    private bool _allowMergeLarger;
     private void Awake()
     {
         _lr = GetComponent<LineRenderer>();
@@ -108,26 +107,27 @@ public class LineController : MonoBehaviour
                 {
                     if (!SelectedHexCells.Contains(foundCell))
                     {
-                        if (foundCell.hex.state.number != SelectedHexCells[SelectedHexCells.Count - 1].hex.state.number && SelectedHexCells.Count < 2)
+                        if (SelectedHexCells.Count >= 2)
                         {
-                            return;
+                            _allowMergeLarger = true;
                         }
-                        if (m_Board.CanMerge(SelectedHexCells[SelectedHexCells.Count - 1], foundCell))
+                        if (m_Board.CanMerge(SelectedHexCells[SelectedHexCells.Count - 1], foundCell, _allowMergeLarger))
                         {
                             SelectedHexCells.Add(foundCell);
                             Vector2 hexPos = foundCell.transform.position;
                             Points[Points.Count - 1] = hexPos;
                         }
                     }
-                    else
+                    else// backtrack
                     {
                         if (foundCell != SelectedHexCells.Last())
                         {
-                            int removeFrom = SelectedHexCells.IndexOf(foundCell);
-                            int removeTo = SelectedHexCells.Count - 1;
-                            Debug.Log(removeFrom + "-->" + removeTo);
-                            SelectedHexCells.RemoveRange(removeFrom,removeTo - removeFrom);
-                            Points.RemoveRange(removeFrom, removeTo + 1 - removeFrom);
+                            int removeCellsFrom = SelectedHexCells.IndexOf(foundCell);
+                            int removeCellsTo = SelectedHexCells.Count - 1;
+                            int removePointsFrom = SelectedHexCells.IndexOf(foundCell);
+                            int removePointsTo = Points.Count - 1;
+                            SelectedHexCells.RemoveRange(removeCellsFrom + 1,removeCellsTo - removeCellsFrom);
+                            Points.RemoveRange(removePointsFrom + 1, removePointsTo - removePointsFrom);
                         }
                     }
                 }
@@ -143,6 +143,7 @@ public class LineController : MonoBehaviour
             }
             
             _firstTouchIsOnHex = false;
+            _allowMergeLarger = false;
             SelectedHexCells.Clear();
             Points.Clear();
         }
